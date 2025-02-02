@@ -1,23 +1,8 @@
-import {
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-} from "@ant-design/icons";
 import { Layout, Menu } from "antd";
-import { createElement } from "react";
 import { Outlet } from "react-router-dom";
 import HeaderComponent from "../ui/Header";
-
-const items = [
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-  UserOutlined,
-].map((icon, index) => ({
-  key: String(index + 1),
-  icon: createElement(icon),
-  label: `nav ${index + 1}`,
-}));
+import { generateSidebarItems } from "../../utils/generateSidebarItems";
+import { AdminPaths } from "../../routes/AdminRoutes";
 
 const { Content, Sider } = Layout;
 
@@ -29,8 +14,9 @@ const MainLayout = () => {
       <Layout style={{ height: "100vh" }}>
         <Sider theme="light" breakpoint="lg">
           <Menu
+          mode="inline"
             defaultSelectedKeys={["1"]}
-            items={items}
+            items={generateSidebarItems(AdminPaths, 'admin')}
             style={{ borderRight: "none", height: "100%", padding: '10px 5px' }}
           />
         </Sider>
