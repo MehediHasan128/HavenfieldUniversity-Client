@@ -50,7 +50,7 @@ const Login = () => {
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="size-5 lg:size-6 absolute top-0 left-2 flex items-center h-full text-white"
+                    className="size-5 absolute top-0 left-2 flex items-center h-full text-white"
                   >
                     <path
                       strokeLinecap="round"
@@ -73,7 +73,7 @@ const Login = () => {
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
-                    className="size-5 lg:size-6 absolute top-0 left-2 flex items-center h-full text-white"
+                    className="size-5 absolute top-0 left-2 flex items-center h-full text-white"
                   >
                     <path
                       strokeLinecap="round"
@@ -94,7 +94,7 @@ const Login = () => {
                           viewBox="0 0 24 24"
                           strokeWidth={1.5}
                           stroke="currentColor"
-                          className="size-5 lg:size-6 absolute top-0 right-2 flex items-center h-full text-white"
+                          className="size-5 absolute top-0 right-2 flex items-center h-full text-white"
                         >
                           <path
                             strokeLinecap="round"
@@ -116,7 +116,7 @@ const Login = () => {
                           viewBox="0 0 24 24"
                           strokeWidth={1.5}
                           stroke="currentColor"
-                          className="size-5 lg:size-6 absolute top-0 right-2 flex items-center h-full text-white"
+                          className="size-5 absolute top-0 right-2 flex items-center h-full text-white"
                         >
                           <path
                             strokeLinecap="round"
@@ -155,6 +155,3 @@ const Login = () => {
 };
 
 export default Login;
-
-// background: rgb(96,53,142);
-// background: linear-gradient(111deg, rgba(96,53,142,1) 0%, rgba(117,80,172,0.9220063025210083) 100%);
