@@ -12,7 +12,7 @@ const items = [UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined].
     }),
   );
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 
 const MainLayout = () => {
 
@@ -39,21 +39,18 @@ const MainLayout = () => {
       </Sider>
       <Layout>
         <Header style={{ padding: 0, background: colorBgContainer }} />
-        <Content style={{ margin: '24px 16px 0' }}>
+        <Content style={{ margin: '24px 16px 24px' }}>
           <div
             style={{
               padding: 24,
               height: '100%',
               background: colorBgContainer,
-              borderRadius: borderRadiusLG,
+              borderRadius: borderRadiusLG
             }}
           >
             <Outlet />
           </div>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
-        </Footer>
       </Layout>
     </Layout>
     );
