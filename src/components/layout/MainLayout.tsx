@@ -1,10 +1,10 @@
-import { Layout, Menu } from "antd";
+import { Layout } from "antd";
 import { Outlet } from "react-router-dom";
 import HeaderComponent from "../ui/Header";
-import { generateSidebarItems } from "../../utils/generateSidebarItems";
-import { AdminPaths } from "../../routes/AdminRoutes";
+import Sidebar from "../ui/Sidebar";
 
-const { Content, Sider } = Layout;
+const { Content } = Layout;
+
 
 const MainLayout = () => {
   return (
@@ -12,14 +12,7 @@ const MainLayout = () => {
       <HeaderComponent />
 
       <Layout style={{ height: "100vh" }}>
-        <Sider theme="light" breakpoint="lg">
-          <Menu
-          mode="inline"
-            defaultSelectedKeys={["1"]}
-            items={generateSidebarItems(AdminPaths, 'admin')}
-            style={{ borderRight: "none", height: "100%", padding: '10px 5px' }}
-          />
-        </Sider>
+        <Sidebar />
         <Layout>
           <Content style={{ margin: "24px 16px 24px" }}>
             <div
