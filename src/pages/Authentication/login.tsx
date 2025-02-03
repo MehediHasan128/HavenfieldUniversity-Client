@@ -1,10 +1,28 @@
 import { useState } from "react";
 import cover from "../../assets/images/cover3.jpg";
 import logo from "../../assets/images/logo-white.png";
+import { useForm } from "react-hook-form";
+import { useLoginMutation } from "../../redux/features/auth/authApi";
+import { useAppDispatch } from "../../redux/hooks";
+import { setUser } from "../../redux/features/auth/authSlice";
+import { decodedToken } from "../../utils/decodedToken";
 
 const Login = () => {
   const [click, setClick] = useState(false);
-  console.log(click);
+
+  const dispatch = useAppDispatch();
+  const {register, handleSubmit} = useForm({
+    defaultValues: {email: 'mehedihasan12926@gmail.com', password: 'student123'}
+  });
+  const [login, {data, error}] = useLoginMutation();
+  console.log('data =>', data);
+  console.log('error =>', error);
+
+  const handelLogin = async(formData) => {
+    const res = await login(formData).unwrap();
+    const userData = decodedToken(res?.data?.accessToken);
+    dispatch(setUser({user: userData, token: res.data.accessToken}));
+  }
 
   return (
     <div className="flex justify-center md:items-center md:h-screen">
@@ -33,16 +51,16 @@ const Login = () => {
 
             {/* Form section */}
             <div className="p-5 lg:w-[80%] mx-auto">
-              <form className="space-y-5 w-full">
+              <form onSubmit={handleSubmit(handelLogin)} className="space-y-5 w-full">
 
 
                 <div className="relative">
                   <input
                     className="bg-transparent border-b-[3px] border-white focus:border-b-[3px] focus:outline-none w-full pl-10 pr-3 py-3 lg:text-lg font-semibold text-white"
                     type="email"
-                    name="email"
                     id=""
                     placeholder="Enter your email"
+                    {...register('email')}
                   />
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -63,9 +81,9 @@ const Login = () => {
                   <input
                     className="bg-transparent border-b-[3px] border-white focus:border-b-[3px] focus:outline-none w-full pl-10 pr-3 py-3 lg:text-lg font-semibold text-white"
                     type={click ? "text": "password"}
-                    name="password"
                     id=""
                     placeholder="*****"
+                    {...register('password')}
                   />
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -129,7 +147,7 @@ const Login = () => {
                   </div>
                 </div>
                 <div className="w-full">
-                    <button className="w-full h-full p-3 mt-3 bg-black text-sm lg:text-xl lg:font-semibold text-white rounded-xl hover:scale-105 duration-700 cursor-pointer">LOGIN</button>
+                    <button type="submit" className="w-full h-full p-3 mt-3 bg-black text-sm lg:text-xl lg:font-semibold text-white rounded-xl hover:scale-105 duration-700 cursor-pointer">LOGIN</button>
                     <div className="text-end mt-1">
                     <button className="text-lg font-semibold underline text-blue-300 cursor-pointer">Forgot Password?</button>
                     </div>
