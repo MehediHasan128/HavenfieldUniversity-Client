@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactElement, ReactNode } from "react";
 
 export type TRoutes = {
     index?: boolean;
@@ -8,7 +8,8 @@ export type TRoutes = {
 
 
 export type TSidebarItems = {
-    key: string;
+    key: string | undefined;
+    icon?: ReactElement;
     label: ReactNode;
     children?: TSidebarItems[];
 }
@@ -17,6 +18,7 @@ export type TSidebarItems = {
 export type TUserPath = {
     index?: boolean;
     path?: string;
+    icon?: ReactElement;
     label?: string;
     element?: ReactNode;
     children?: TUserPath[];

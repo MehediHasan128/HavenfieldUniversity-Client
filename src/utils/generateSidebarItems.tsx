@@ -7,6 +7,7 @@ export const generateSidebarItems = (items: TUserPath[], userRole: string) => {
         if(item.label && item.element){
             acc.push({
                 key: item.label,
+                icon: item.icon,
                 label: <NavLink to={`/${userRole}/${item.path}`}>{item.label}</NavLink>
             })
         }
@@ -14,6 +15,7 @@ export const generateSidebarItems = (items: TUserPath[], userRole: string) => {
         if(item.label && item.children){
             acc.push({
                 key: item.label,
+                icon: item.icon,
                 label: item.label,
                 children: item.children.map((ele) => ({
                     key: ele.label!,

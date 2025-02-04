@@ -8,18 +8,17 @@ const HeaderComponent = () => {
     return (
         <Header
         style={{ padding: 0, backgroundColor: "#cfcfcf"}}
-        className="shadow-xl"
       >
-        <div className="flex justify-between items-center h-full px-5 md:px-10">
-          <div className="flex justify-center items-center gap-2">
-            <img className="size-10 lg:size-12" src={logo} alt="" />
-            <h1 className="text-sm lg:text-xl font-bold leading-4 lg:leading-5">
+        <div className="flex justify-between items-center h-full px-5 md:px-5">
+          <div className="flex justify-center items-center gap-1 md:gap-2">
+            <img className="size-8 lg:size-12" src={logo} alt="" />
+            <h1 className="text-xs lg:text-xl font-bold leading-3 lg:leading-5">
               <span className="text-[#4f80fa]">Havenfield</span>
               <br />
               University
             </h1>
           </div>
-          <div className="flex justify-center items-center gap-2 md:gap-3 lg:gap-5">
+          <div className="flex justify-center items-center lg:pr-5 gap-2 md:gap-3 lg:gap-5">
             <div className="bg-gray-100 size-8 md:size-9 lg:size-11 rounded-full flex justify-center items-center overflow-hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -52,11 +51,9 @@ const HeaderComponent = () => {
                 />
               </svg>
             </div>
-            <div className="bg-gray-100 size-8  md:size-9 lg:size-11 rounded-full flex justify-center items-center overflow-hidden">
-              <img className="w-full" src="https://tinyurl.com/475849hm" alt="" />
-            </div>
           </div>
         </div>
+
       </Header>
     );
 };
