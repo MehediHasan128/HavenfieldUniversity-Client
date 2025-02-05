@@ -23,8 +23,8 @@ const Login = () => {
     },
   });
 
-  console.log("data =>", data);
-  console.log("error =>", error);
+  // console.log("data =>", data);
+  // console.log("error =>", error);
 
   const handelLogin = async (formData: FieldValues) => {
     const toastId = toast.loading("Logging in");
