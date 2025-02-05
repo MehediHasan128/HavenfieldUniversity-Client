@@ -2,12 +2,13 @@ import { Layout, Menu } from "antd";
 import { generateSidebarItems } from "../../utils/generateSidebarItems";
 import { AdminPaths } from "../../routes/AdminRoutes";
 import { PowerIcon } from "@heroicons/react/24/outline";
-import { useAppDispatch } from "../../redux/hooks";
-import { logout } from "../../redux/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { logout, useCurrentUser } from "../../redux/features/auth/authSlice";
+import { StudentPaths } from "../../routes/StudentRoutes";
 
 const { Sider } = Layout;
 
-const userRole = {
+const Role = {
   ADMIN: "admin",
   FACULTY: "faculty",
   STUDENT: "student",
@@ -18,23 +19,25 @@ const imageURL =
 
 const Sidebar = () => {
 
+  const user = useAppSelector(useCurrentUser);
+  const userRole = user?.userRole;
   const dispatch = useAppDispatch();
   const handelLogout = () =>{
     dispatch(logout());
   }
 
-  const role = "admin";
+  const role = `${userRole}`;
   let sidebarItems;
 
   switch (role) {
-    case userRole.ADMIN:
-      sidebarItems = generateSidebarItems(AdminPaths, userRole.ADMIN);
+    case Role.ADMIN:
+      sidebarItems = generateSidebarItems(AdminPaths, Role.ADMIN);
       break;
-    case userRole.FACULTY:
-      sidebarItems = generateSidebarItems(AdminPaths, userRole.FACULTY);
+    case Role.FACULTY:
+      sidebarItems = generateSidebarItems(AdminPaths, Role.FACULTY);
       break;
-    case userRole.STUDENT:
-      sidebarItems = generateSidebarItems(AdminPaths, userRole.STUDENT);
+    case Role.STUDENT:
+      sidebarItems = generateSidebarItems(StudentPaths, Role.STUDENT);
       break;
 
     default:

@@ -1,31 +1,44 @@
 import { useState } from "react";
 import cover from "../../assets/images/cover3.jpg";
 import logo from "../../assets/images/logo-white.png";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { useLoginMutation } from "../../redux/features/auth/authApi";
 import { useAppDispatch } from "../../redux/hooks";
-import { setUser } from "../../redux/features/auth/authSlice";
+import { setUser, TUser } from "../../redux/features/auth/authSlice";
 import { decodedToken } from "../../utils/decodedToken";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const Login = () => {
   const [click, setClick] = useState(false);
 
   const dispatch = useAppDispatch();
+  const [login, { data, error }] = useLoginMutation();
   const navigate = useNavigate();
-  const {register, handleSubmit} = useForm({
-    defaultValues: {email: 'mehedihasan12926@gmail.com', password: 'student123'}
-  });
-  const [login, {data, error}] = useLoginMutation();
-  console.log('data =>', data);
-  console.log('error =>', error);
 
-  const handelLogin = async(formData) => {
-    const res = await login(formData).unwrap();
-    const userData = decodedToken(res?.data?.accessToken);
-    dispatch(setUser({user: userData, token: res.data.accessToken}));
-    navigate(`/${userData?.userRole}/dashboard`)
-  }
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      email: "john56.doe@example.com",
+      password: "admin123",
+    },
+  });
+
+  console.log("data =>", data);
+  console.log("error =>", error);
+
+  const handelLogin = async (formData: FieldValues) => {
+    const toastId = toast.loading("Logging in");
+
+    try {
+      const res = await login(formData).unwrap();
+      const userData = decodedToken(res?.data?.accessToken) as TUser;
+      dispatch(setUser({ user: userData, token: res.data.accessToken }));
+      navigate(`/${userData?.userRole}/dashboard`);
+      toast.success("Logged in", { id: toastId, duration: 2000 });
+    } catch (error) {
+      toast.error(error?.data?.message, { id: toastId, duration: 2000 });
+    }
+  };
 
   return (
     <div className="flex justify-center md:items-center md:h-screen">
@@ -54,16 +67,17 @@ const Login = () => {
 
             {/* Form section */}
             <div className="p-5 lg:w-[80%] mx-auto">
-              <form onSubmit={handleSubmit(handelLogin)} className="space-y-5 w-full">
-
-
+              <form
+                onSubmit={handleSubmit(handelLogin)}
+                className="space-y-5 w-full"
+              >
                 <div className="relative">
                   <input
                     className="bg-transparent border-b-[3px] border-white focus:border-b-[3px] focus:outline-none w-full pl-10 pr-3 py-3 lg:text-lg font-semibold text-white"
                     type="email"
                     id=""
                     placeholder="Enter your email"
-                    {...register('email')}
+                    {...register("email")}
                   />
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -83,10 +97,10 @@ const Login = () => {
                 <div className="relative">
                   <input
                     className="bg-transparent border-b-[3px] border-white focus:border-b-[3px] focus:outline-none w-full pl-10 pr-3 py-3 lg:text-lg font-semibold text-white"
-                    type={click ? "text": "password"}
+                    type={click ? "text" : "password"}
                     id=""
                     placeholder="*****"
-                    {...register('password')}
+                    {...register("password")}
                   />
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -150,13 +164,18 @@ const Login = () => {
                   </div>
                 </div>
                 <div className="w-full">
-                    <button type="submit" className="w-full h-full p-3 mt-3 bg-black text-sm lg:text-xl lg:font-semibold text-white rounded-xl hover:scale-105 duration-700 cursor-pointer">LOGIN</button>
-                    <div className="text-end mt-1">
-                    <button className="text-lg font-semibold underline text-blue-300 cursor-pointer">Forgot Password?</button>
-                    </div>
+                  <button
+                    type="submit"
+                    className="w-full h-full p-3 mt-3 bg-black text-sm lg:text-xl lg:font-semibold text-white rounded-xl hover:scale-105 duration-700 cursor-pointer"
+                  >
+                    LOGIN
+                  </button>
+                  <div className="text-end mt-1">
+                    <button className="text-lg font-semibold underline text-blue-300 cursor-pointer">
+                      Forgot Password?
+                    </button>
+                  </div>
                 </div>
-
-                
               </form>
             </div>
           </div>
@@ -165,9 +184,17 @@ const Login = () => {
         <div className="md:w-[50%] lg:p-20 p-10">
           <div>
             <p className="text-xl font-semibold text-white">Welcome To,</p>
-            <h1 className="text-3xl md:text-2xl lg:text-4xl font-bold text-purple-300">Havenfield University</h1>
-            <h1 className="my-3 text-3xl md:text-2xl lg:text-4xl font-semibold text-white">Speed Up <br />data entry</h1>
-            <p className="text-sm md:text-xs lg:text-base font-semibold text-gray-300">Use the F4 key to automatically accept all field defaults for faster data entry.</p>
+            <h1 className="text-3xl md:text-2xl lg:text-4xl font-bold text-purple-300">
+              Havenfield University
+            </h1>
+            <h1 className="my-3 text-3xl md:text-2xl lg:text-4xl font-semibold text-white">
+              Speed Up <br />
+              data entry
+            </h1>
+            <p className="text-sm md:text-xs lg:text-base font-semibold text-gray-300">
+              Use the F4 key to automatically accept all field defaults for
+              faster data entry.
+            </p>
           </div>
         </div>
       </div>
