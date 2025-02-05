@@ -6,11 +6,13 @@ import { useLoginMutation } from "../../redux/features/auth/authApi";
 import { useAppDispatch } from "../../redux/hooks";
 import { setUser } from "../../redux/features/auth/authSlice";
 import { decodedToken } from "../../utils/decodedToken";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [click, setClick] = useState(false);
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const {register, handleSubmit} = useForm({
     defaultValues: {email: 'mehedihasan12926@gmail.com', password: 'student123'}
   });
@@ -22,6 +24,7 @@ const Login = () => {
     const res = await login(formData).unwrap();
     const userData = decodedToken(res?.data?.accessToken);
     dispatch(setUser({user: userData, token: res.data.accessToken}));
+    navigate(`/${userData?.userRole}/dashboard`)
   }
 
   return (
