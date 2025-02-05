@@ -49,6 +49,7 @@ const Sidebar = () => {
       theme="light"
       breakpoint="lg"
       style={{
+        overflowX: 'hidden',
         overflow: "auto",
         scrollbarWidth: "thin",
         scrollbarGutter: "stable",
