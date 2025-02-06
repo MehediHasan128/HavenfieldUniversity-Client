@@ -8,7 +8,8 @@ import AdminDashboard from "../pages/Admin/AdminDashboard";
 import CreateFaculty from "../pages/Admin/UserManagement/CreateFaculty";
 import CreateStudent from "../pages/Admin/UserManagement/CreateStudent";
 import { generateUserRoutes } from "../utils/generateUserRoutes";
-import { AcademicCapIcon, UserCircleIcon, UserGroupIcon } from "@heroicons/react/24/outline";
+import { LuLayoutDashboard } from "react-icons/lu";
+import { HiOutlineUserGroup, HiOutlineAcademicCap } from "react-icons/hi2";
 
 export const AdminPaths = [
   {
@@ -19,11 +20,11 @@ export const AdminPaths = [
     path: "dashboard",
     label: "Dashboard",
     element: <AdminDashboard />,
-    icon: <UserCircleIcon className="size-4 md:size-5 lg:size-7" />
+    icon: <LuLayoutDashboard className="size-4 md:size-5" />
 
   },
   {
-    icon: <UserGroupIcon className="size-4 md:size-5 lg:size-7" />,
+    icon: <HiOutlineUserGroup className="size-4 md:size-5" />,
     label: "User Management",
     children: [
       {
@@ -39,7 +40,7 @@ export const AdminPaths = [
     ],
   },
   {
-    icon: <AcademicCapIcon className="size-4 md:size-5 lg:size-7" />,
+    icon: <HiOutlineAcademicCap className="size-4 md:size-5" />,
     label: "Academic Management",
     children: [
       {

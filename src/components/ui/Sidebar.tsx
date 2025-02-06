@@ -18,13 +18,12 @@ const imageURL =
   "https://cdn.pixabay.com/photo/2021/09/20/03/24/skeleton-6639547_1280.png";
 
 const Sidebar = () => {
-
   const user = useAppSelector(useCurrentUser);
   const userRole = user?.userRole;
   const dispatch = useAppDispatch();
-  const handelLogout = () =>{
+  const handelLogout = () => {
     dispatch(logout());
-  }
+  };
 
   const role = `${userRole}`;
   let sidebarItems;
@@ -46,14 +45,13 @@ const Sidebar = () => {
 
   return (
     <Sider
+      width={250}
       theme="light"
       breakpoint="lg"
       style={{
-        overflowX: 'hidden',
-        overflow: "auto",
-        scrollbarWidth: "thin",
-        scrollbarGutter: "stable",
-        scrollBehavior: "smooth"
+        overflow: 'auto',
+        scrollbarWidth: 'thin',
+        scrollBehavior: 'smooth'
       }}
     >
       <div className="flex flex-col h-screen">
@@ -84,21 +82,26 @@ const Sidebar = () => {
 
         <div className="flex-grow">
           <div className="flex flex-col h-full">
-            <div className="flex-grow">
-              <Menu
-                mode="inline"
-                defaultSelectedKeys={["Dashboard"]}
-                items={sidebarItems}
-                style={{
-                  borderRight: "none",
-                  padding: "10px 0px",
-                  fontSize: "14px",
-                  fontWeight: "500",
-                }}
-              />
+            <div className="flex-grow p-2">
+              <div>
+                <Menu
+                  mode="inline"
+                  defaultSelectedKeys={["Dashboard"]}
+                  items={sidebarItems}
+                  style={{
+                    padding: "10px 0px",
+                    fontSize: "12px",
+                    fontWeight: "500",
+                    borderRight: 0,
+                  }}
+                />
+              </div>
             </div>
-            <div className=" py-3 lg:py-4 w-full">
-              <button onClick={handelLogout} className="w-[90%] lg:w-full flex justify-center items-center lg:gap-1 bg-blue-400 ml-1 lg:px-5 py-1 lg:py-2 rounded-lg text-white font-semibold cursor-pointer hover:bg-blue-500 duration-700">
+            <div className="py-3 lg:py-4 px-2 w-full">
+              <button
+                onClick={handelLogout}
+                className=" w-[100%] flex justify-center items-center lg:gap-1 bg-blue-400 lg:px-5 py-1 lg:py-2 rounded-lg text-white font-semibold cursor-pointer hover:bg-blue-500 duration-700"
+              >
                 <PowerIcon className="size-4 lg:size-5" />
                 <p className="hidden lg:flex">Logout</p>
               </button>
