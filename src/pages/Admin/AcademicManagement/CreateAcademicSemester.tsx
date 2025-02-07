@@ -3,16 +3,23 @@ import cover from "../../../assets/images/cover.jpg";
 import HForm from "../../../components/form/HForm";
 import { FieldValues } from "react-hook-form";
 import HSelect from "../../../components/form/HSelect";
-
-const options = [
-  { value: "01", label: "Spring" },
-  { value: "02", label: "Summer" },
-  { value: "03", label: "Fall" },
-];
+import {
+  monthsOptions,
+  semesterOptions,
+  yearOptions,
+} from "../../../constant/semester";
 
 const CreateAcademicSemester = () => {
   const handelCreateAcademicSemester = async (data: FieldValues) => {
-    console.log(data);
+    const semesterData = {
+      semesterName: semesterOptions[Number(data.semesterCode) - 1].label,
+      semesterCode: data?.semesterCode,
+      year: data?.year,
+      startMonth: data?.startMonth,
+      endMonth: data?.endMonth,
+    };
+
+    console.log(semesterData);
 
     // const toastId = toast.loading("Creating Academic School");
     // try{
@@ -38,25 +45,45 @@ const CreateAcademicSemester = () => {
         <div className="bg-white  md:w-[70%] lg:w-[50%] mx-auto p-8 rounded-xl shadow-xl">
           {/* From headline */}
           <div>
-            <h1 className="text-center font-semibold text-xl md:text-2xl">
+            <h1 className="text-center font-semibold text-sm md:text-2xl">
               Create Academi Semester
             </h1>
-            <div className="w-[30%] lg:w-[20%] mx-auto mt-1 border-3 border-blue-500 rounded" />
+            <div className="w-[30%] lg:w-[20%] mx-auto mt-1 border-2 lg:border-3 border-blue-500 rounded" />
           </div>
 
           {/* Form */}
-          <div className="lg:w-[70%] mx-auto mt-5 lg:p-5">
+          <div className="lg:w-[80%] mx-auto mt-5 lg:p-5">
             <HForm onSubmit={handelCreateAcademicSemester}>
               <div>
+                <div className="grid grid-cols-1 md:grid-cols-2 md:gap-3">
+                  <HSelect
+                    name="semesterCode"
+                    label="Semester Name"
+                    placeholder="Select semester name"
+                    options={semesterOptions}
+                  />
+                  <HSelect
+                    name="year"
+                    label="Year"
+                    placeholder="Select year"
+                    options={yearOptions}
+                  />
+                </div>
                 <HSelect
-                  name="code"
-                  label="Semester Name"
-                  placeholder="Select semester name"
-                  options={options}
+                  name="startMonth"
+                  label="Start Month"
+                  placeholder="Select start month"
+                  options={monthsOptions}
                 />
-
+                <HSelect
+                  name="endMonth"
+                  label="End Month"
+                  placeholder="Select end month"
+                  options={monthsOptions}
+                />
+                {/* Submit button */}
                 <button className="bg-blue-500 w-full py-2 mt-5 rounded-lg text-md font-semibold text-white cursor-pointer border border-blue-600 hover:bg-transparent hover:text-black hover:border hover:border-blue-600 duration-700">
-                  Submit
+                  Add Semester
                 </button>
               </div>
             </HForm>

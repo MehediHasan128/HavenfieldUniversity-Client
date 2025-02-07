@@ -37,10 +37,10 @@ const CreateAcademicSchool = () => {
       <div className="absolute top-[40%] md:top-[50%] w-full px-3 pb-3 lg:pb-0">
         <div className="bg-white  md:w-[70%] lg:w-[50%] mx-auto p-8 rounded-xl shadow-xl">
           <div>
-            <h1 className="text-center font-semibold text-xl md:text-2xl">
+            <h1 className="text-center font-semibold text-sm md:text-2xl">
               Create Academi School
             </h1>
-            <div className="w-[30%] lg:w-[20%] mx-auto mt-1 border-3 border-blue-500 rounded" />
+            <div className="w-[30%] lg:w-[20%] mx-auto mt-1 border-2 lg:border-3 border-blue-500 rounded" />
           </div>
           <div className="lg:w-[70%] mx-auto mt-5 lg:p-5">
             <HForm onSubmit={handelCreateAcademicSchool}>
@@ -74,8 +74,3 @@ const CreateAcademicSchool = () => {
 };
 
 export default CreateAcademicSchool;
-
-
-
-// School
-// school
