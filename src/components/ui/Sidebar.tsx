@@ -86,7 +86,6 @@ const Sidebar = () => {
               <div>
                 <Menu
                   mode="inline"
-                  defaultSelectedKeys={["Dashboard"]}
                   items={sidebarItems}
                   style={{
                     padding: "10px 0px",

@@ -11,8 +11,8 @@ const MainLayout = () => {
         <Sidebar />
         <Layout>
           <HeaderComponent />
-          <div style={{overflow: 'auto', scrollbarWidth: 'thin', scrollBehavior: 'smooth', scrollMargin: '10px'}}>
-          <Content style={{ margin: "24px 16px 24px" }}>
+          <div className="flex justify-center items-center h-screen md:px-8 md:py-4" style={{overflow: 'auto', scrollbarWidth: 'thin', scrollBehavior: 'smooth', scrollMargin: '10px'}}>
+          <Content style={{height: '100%'}}>
               <Outlet />
           </Content>
           </div>
