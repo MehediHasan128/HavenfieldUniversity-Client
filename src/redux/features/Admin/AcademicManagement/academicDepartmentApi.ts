@@ -8,8 +8,19 @@ const academicDepartment = baseapi.injectEndpoints({
             method: "POST",
             body: departmentInfo
         })
+    }),
+    getAllAcademicDepartment: builder.query({
+      query: () => ({
+        url: "/academicDepartment",
+        method: "GET"
+      }),
+      transformResponse: (responce) => {
+        return {
+          data: responce.data
+        }
+      }
     })
   })
 });
 
-export const { useCreateAcademicDepartmentMutation } = academicDepartment;
+export const { useCreateAcademicDepartmentMutation, useGetAllAcademicDepartmentQuery } = academicDepartment;
