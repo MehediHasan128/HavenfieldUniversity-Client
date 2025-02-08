@@ -2,10 +2,14 @@ import { Table } from "antd";
 import type { TableColumnsType, TableProps } from "antd";
 import cover from "../../../assets/images/cover.jpg";
 import { useGetAllSemesterQuery } from "../../../redux/features/Admin/AcademicManagement/academicSemesterApi";
-import { TItem, TTableDataType } from "../../../types/academicSemester";
+import {
+  TItem,
+  TQueryParams,
+  TTableDataType,
+} from "../../../types/academicSemester";
+import { useState } from "react";
 
-
-
+// Table colum
 const columns: TableColumnsType<TTableDataType> = [
   {
     title: "Name",
@@ -24,7 +28,7 @@ const columns: TableColumnsType<TTableDataType> = [
         text: "Fall",
         value: "Fall",
       },
-    ]
+    ],
   },
   {
     title: "Year",
@@ -42,18 +46,32 @@ const columns: TableColumnsType<TTableDataType> = [
   },
 ];
 
-const onChange: TableProps<TTableDataType>["onChange"] = (
-  pagination,
-  filters,
-  sorter,
-  extra
-) => {
-  console.log("params", pagination, filters, sorter, extra);
-};
-
 const AcademicSemester = () => {
-  const { data: semesterData } = useGetAllSemesterQuery([{filterTerm: 'year', value: '2025'}]);
+  const [params, setParams] = useState<TQueryParams[] | undefined>(undefined);
+  const { data: semesterData, isFetching } = useGetAllSemesterQuery(params);
 
+  // Habdel filter sort
+  const onChange: TableProps<TTableDataType>["onChange"] = (
+    _pagination,
+    filters,
+    _sorter,
+    extra
+  ) => {
+    if (extra.action === "filter") {
+      const queryParams: TQueryParams[] = [];
+
+      filters.name?.forEach((item) => {
+        queryParams.push({
+          filterTerm: "semesterName",
+          value: item,
+        });
+      });
+
+      setParams(queryParams);
+    }
+  };
+
+  // Find out table data
   const tableData = semesterData?.data.map((item: TItem) => ({
     key: item._id,
     name: item.semesterName,
@@ -72,12 +90,13 @@ const AcademicSemester = () => {
         }}
         className="md:rounded-t-xl h-[300px]"
       />
+      {/* Table container */}
       <div className="absolute w-full">
-        <Table<TTableDataType>
+        <Table
+          loading={isFetching}
           columns={columns}
           dataSource={tableData}
           onChange={onChange}
-          showSorterTooltip={{ target: "sorter-icon" }}
         />
       </div>
     </div>

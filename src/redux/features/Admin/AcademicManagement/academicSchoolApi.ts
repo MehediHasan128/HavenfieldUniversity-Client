@@ -9,7 +9,18 @@ const academicSchool = baseapi.injectEndpoints({
         body: academicSchoolInfo,
       }),
     }),
-  }),
+    getAllAcademicSchool: builder.query({
+      query: () => ({
+        url: "/academicSchool",
+        method: "GET"
+      }),
+      transformResponse: (responce) => {
+        return {
+          data: responce.data
+        }
+      }
+    })
+  })
 });
 
-export const { useCreateAcademicSchoolMutation } = academicSchool;
+export const { useCreateAcademicSchoolMutation, useGetAllAcademicSchoolQuery } = academicSchool;

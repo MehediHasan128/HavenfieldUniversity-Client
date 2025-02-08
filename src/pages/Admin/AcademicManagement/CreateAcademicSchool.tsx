@@ -17,7 +17,7 @@ const CreateAcademicSchool = () => {
     const toastId = toast.loading("Creating Academic School");
     try {
       const res = await createAcademicSchool(acaddemicSchoolInfo).unwrap();
-      toast.success(res?.message, { id: toastId, duration: 2000 });
+      toast.success(res?.message, { id: toastId, duration: 3000 });
     } catch (error) {
       toast.error(error?.data?.message, { id: toastId, duration: 3000 });
     }

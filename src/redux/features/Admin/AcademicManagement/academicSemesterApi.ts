@@ -1,3 +1,4 @@
+import { TQueryParams } from "../../../../types/academicSemester";
 import { baseapi } from "../../../api/baseApi";
 
 const academicSemesterApi = baseapi.injectEndpoints({
@@ -13,7 +14,11 @@ const academicSemesterApi = baseapi.injectEndpoints({
       query: (args) => {
         
         const params = new URLSearchParams();
-        params.append(args[0].filterTerm, args[0].value)
+        if(args){
+            args.forEach((item: TQueryParams) => {
+                params.append(item.filterTerm, item.value as string)
+            });
+        }
 
         return {
           url: "/academicSemester",

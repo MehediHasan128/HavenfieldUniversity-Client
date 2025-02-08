@@ -1,3 +1,5 @@
+import React from "react";
+
 export type TTableDataType = {
     key: React.Key;
     name: string;
@@ -11,4 +13,9 @@ export type TTableDataType = {
     year: string;
     startMonth: string;
     endMonth: string;
+  };
+
+  export type TQueryParams = {
+    filterTerm: string;
+    value: boolean | React.Key;
   };
