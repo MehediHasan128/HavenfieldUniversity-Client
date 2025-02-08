@@ -8,8 +8,14 @@ import {
   semesterOptions,
   yearOptions,
 } from "../../../constant/semester";
+import {zodResolver} from '@hookform/resolvers/zod';
+import { academicSemesterSchema } from "../../../validation/academicSemesterValidationSchema";
+import { useCreateAcademicSemesterMutation } from "../../../redux/features/Admin/AcademicManagement/academicSemesterApi";
 
 const CreateAcademicSemester = () => {
+
+    const [createAcademicSemester, {isLoading}] = useCreateAcademicSemesterMutation()
+
   const handelCreateAcademicSemester = async (data: FieldValues) => {
     const semesterData = {
       semesterName: semesterOptions[Number(data.semesterCode) - 1].label,
@@ -19,16 +25,23 @@ const CreateAcademicSemester = () => {
       endMonth: data?.endMonth,
     };
 
-    console.log(semesterData);
-
-    // const toastId = toast.loading("Creating Academic School");
-    // try{
-    //   const res = await .unwrap();
-    //   toast.success(res?.message, { id: toastId, duration: 2000 });
-    // }catch(error){
-    //   toast.error(error?.data?.message, { id: toastId, duration: 3000 });
-    // }
+    const toastId = toast.loading("Creating Academic Semester");
+    try{
+      const res = await createAcademicSemester(semesterData).unwrap();
+      console.log(res);
+      toast.success(res?.message, { id: toastId, duration: 2000 });
+    }catch(error){
+      toast.error(error?.data?.message, { id: toastId, duration: 3000 });
+    }
   };
+
+  console.log(isLoading);
+
+
+
+
+
+
 
   return (
     <div className="relative">
@@ -53,7 +66,7 @@ const CreateAcademicSemester = () => {
 
           {/* Form */}
           <div className="lg:w-[80%] mx-auto mt-5 lg:p-5">
-            <HForm onSubmit={handelCreateAcademicSemester}>
+            <HForm onSubmit={handelCreateAcademicSemester} resolver={zodResolver(academicSemesterSchema)}>
               <div>
                 <div className="grid grid-cols-1 md:grid-cols-2 md:gap-3">
                   <HSelect

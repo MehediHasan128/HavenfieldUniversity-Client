@@ -6,14 +6,23 @@ import {
   useForm,
 } from "react-hook-form";
 
+type TFormConfig = {
+  resolver?: any;
+};
+
 const HForm = ({
   onSubmit,
   children,
+  resolver,
 }: {
   onSubmit: SubmitHandler<FieldValues>;
   children: ReactElement;
-}) => {
-  const methods = useForm();
+} & TFormConfig) => {
+  const formConfig: TFormConfig = {};
+  if (resolver) {
+    formConfig["resolver"] = resolver;
+  }
+  const methods = useForm(formConfig);
 
   return (
     <FormProvider {...methods}>

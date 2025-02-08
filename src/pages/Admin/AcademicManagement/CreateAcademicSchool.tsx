@@ -2,24 +2,23 @@ import { FieldValues } from "react-hook-form";
 import HForm from "../../../components/form/HForm";
 import HInput from "../../../components/form/HInput";
 import cover from "../../../assets/images/cover.jpg";
-import { useCreateAcademicSchoolMutation } from "../../../redux/features/AcademicSchool/academicSchoolApi";
+import { useCreateAcademicSchoolMutation } from "../../../redux/features/Admin/AcademicManagement/academicSchoolApi";
 import { toast } from "sonner";
 
 const CreateAcademicSchool = () => {
-
   const [createAcademicSchool] = useCreateAcademicSchoolMutation();
 
-  const handelCreateAcademicSchool = async(data: FieldValues) => {
+  const handelCreateAcademicSchool = async (data: FieldValues) => {
     const acaddemicSchoolInfo = {
       schoolName: data?.academicSchool,
-      schoolCode: data?.academicSchoolCode
-    }
-    
+      schoolCode: data?.academicSchoolCode,
+    };
+
     const toastId = toast.loading("Creating Academic School");
-    try{
+    try {
       const res = await createAcademicSchool(acaddemicSchoolInfo).unwrap();
       toast.success(res?.message, { id: toastId, duration: 2000 });
-    }catch(error){
+    } catch (error) {
       toast.error(error?.data?.message, { id: toastId, duration: 3000 });
     }
   };

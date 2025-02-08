@@ -24,7 +24,7 @@ const HSelect = ({
     <>
       <Controller
         name={name}
-        render={({ field }) => (
+        render={({ field, fieldState: {error} }) => (
           <Form layout="vertical" size="large">
             <Form.Item label={label} style={{marginBottom: '10px'}}>
               <Select
@@ -33,6 +33,7 @@ const HSelect = ({
                 options={options}
                 id={name}
               />
+              {error && <><small className="text-red-600">{error.message}</small></>}
             </Form.Item>
           </Form>
         )}
