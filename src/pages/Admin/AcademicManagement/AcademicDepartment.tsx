@@ -58,6 +58,7 @@ const AcademicDepartment = () => {
     console.log(filters);
   };
 
+  
   //   Handel search
   const handelSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch([{ field: "searchTerm", value: e.target.value }]);

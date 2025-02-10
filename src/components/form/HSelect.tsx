@@ -26,7 +26,7 @@ const HSelect = ({
         name={name}
         render={({ field, fieldState: {error} }) => (
           <Form layout="vertical" size="large">
-            <Form.Item label={label} style={{marginBottom: '10px'}}>
+            <Form.Item label={label} style={{marginBottom: '10px'}} required={required}>
               <Select
                 {...field}
                 placeholder={placeholder}
