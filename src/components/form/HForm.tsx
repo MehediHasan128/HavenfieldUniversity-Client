@@ -24,9 +24,14 @@ const HForm = ({
   }
   const methods = useForm(formConfig);
 
+  const handelFromSubmit = (data: FieldValues) => {
+    onSubmit(data)
+    methods.reset()
+  }
+
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>{children}</form>
+      <form onSubmit={methods.handleSubmit(handelFromSubmit)}>{children}</form>
     </FormProvider>
   );
 };

@@ -17,7 +17,6 @@ import OpenModal from "../../../components/ui/modal";
 const AcademicSemester = () => {
   const [params, setParams] = useState<TQueryParams[] | undefined>(undefined);
   const { data: semesterData, isFetching } = useGetAllSemesterQuery(params);
-  const [openResponsive, setOpenResponsive] = useState(false);
 
 
   // Table colum

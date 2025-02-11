@@ -1,10 +1,14 @@
-import { FieldValues } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import HForm from "../../../components/form/HForm";
 import { Button, Divider } from "antd";
 import HInput from "../../../components/form/HInput";
 import HDatePicker from "../../../components/form/HDatePicker";
 import HSelect from "../../../components/form/HSelect";
 import { yearOptions } from "../../../constant/semester";
+import { useEffect, useState } from "react";
+import { TQueryParams } from "../../../types/academicSemester";
+import { useGetAllSemesterQuery } from "../../../redux/features/Admin/AcademicManagement/academicSemesterApi";
+import { generateSelectOptions } from "../../../utils/generateSelectOptions";
 
 const genderOptions = [
   { value: "male", label: "Male" },
@@ -23,6 +27,15 @@ const bloodGrtoupOptions = [
 ];
 
 const CreateStudent = () => {
+  const { control, watch } = useForm();
+  const selectedYear = watch("year");
+  const [params, setParams] = useState<TQueryParams[] | undefined>([]);
+  useEffect(() => {
+    setParams([{ filterTerm: "year", value: selectedYear }]);
+  }, [selectedYear]);
+  const { data: semesterData } = useGetAllSemesterQuery(params);
+  const semesterOptions = generateSelectOptions(semesterData, "semesterName");
+
   const handelCreateStudent = (data: FieldValues) => {
     console.log(data);
   };
@@ -195,24 +208,28 @@ const CreateStudent = () => {
                 label="SSC Roll"
                 name="sscRoll"
                 placeholder="Enter ssc roll"
+                required={true}
               />
               <HInput
                 type="text"
                 label="SSC Result"
                 name="sscResult"
                 placeholder="Enter ssc result"
+                required={true}
               />
               <HInput
                 type="text"
                 label="HSC Roll"
                 name="hscRoll"
                 placeholder="Enter hsc roll"
+                required={true}
               />
               <HInput
                 type="text"
                 label="HSC Result"
                 name="hscResult"
                 placeholder="Enter hsc result"
+                required={true}
               />
             </div>
 
@@ -220,28 +237,36 @@ const CreateStudent = () => {
               <span className="text-blue-600">Addmission Information</span>
             </Divider>
 
-            <Button htmlType="submit">Add Student</Button>
-
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
               <HSelect
                 name="year"
                 label="Year"
                 placeholder="Select year"
                 options={yearOptions}
+                control={control}
+              />
+              <HSelect
+                name="addmissionSemester"
+                label="Addmission Semester"
+                placeholder="Select addmission semester"
+                options={semesterOptions}
+                control={control}
               />
               <HInput
                 type="text"
-                label="Occupation"
-                name="guardian.occupation"
-                placeholder="Enter occupation"
+                label="Academic School"
+                name="academicSchool"
+                placeholder="Select academic school"
               />
               <HInput
                 type="text"
-                label="Contact num"
-                name="guardian.contactNumber"
-                placeholder="Enter contact number"
+                label="Academic Department"
+                name="academicDepartment"
+                placeholder="Select academic department"
               />
             </div>
+
+            <Button htmlType="submit">Add Student</Button>
           </div>
         </HForm>
       </div>
