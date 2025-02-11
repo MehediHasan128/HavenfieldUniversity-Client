@@ -13,6 +13,7 @@ export type TTableDataType = {
     year: string;
     startMonth: string;
     endMonth: string;
+    addmissionStatus: string
   };
 
   export type TQueryParams = {
