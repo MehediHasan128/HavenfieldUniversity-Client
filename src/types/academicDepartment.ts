@@ -8,8 +8,3 @@ export type TAcademicDepartment = {
     schoolName: string;
   };
 };
-
-export type TDepartmentQuery = {
-    field: string,
-    value: boolean | React.Key;
-}

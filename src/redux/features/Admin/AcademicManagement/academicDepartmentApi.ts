@@ -1,4 +1,5 @@
 import { TDepartmentQuery } from "../../../../types/academicDepartment";
+import { TQueryParams } from "../../../../types/academicSemester";
 import { baseapi } from "../../../api/baseApi";
 
 const academicDepartment = baseapi.injectEndpoints({
@@ -14,8 +15,8 @@ const academicDepartment = baseapi.injectEndpoints({
       query: (args) => {
         const params = new URLSearchParams();
           if(args){
-            args.forEach((item: TDepartmentQuery) => {
-              params.append(item.field, item.value as string)
+            args.forEach((item: TQueryParams) => {
+              params.append(item.filterTerm, item.value as string)
             })
           }
 
