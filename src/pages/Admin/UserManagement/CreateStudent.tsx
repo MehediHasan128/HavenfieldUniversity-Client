@@ -13,6 +13,7 @@ import { useGetAllAcademicSchoolQuery } from "../../../redux/features/Admin/Acad
 import { useGetAllAcademicDepartmentQuery } from "../../../redux/features/Admin/AcademicManagement/academicDepartmentApi";
 import HUploads from "../../../components/form/HUploads";
 import { useCreateStudentMutation } from "../../../redux/features/Admin/UserManagement/studentApi";
+import { toast } from "sonner";
 
 const genderOptions = [
   { value: "male", label: "Male" },
@@ -65,13 +66,9 @@ const CreateStudent = () => {
     "departmentName"
   );
 
+  const [createStudent] = useCreateStudentMutation();
 
-
-
-
-  const [createStudent, {data, error}] = useCreateStudentMutation()
-
-  const handelCreateStudent = (data: FieldValues) => {
+  const handelCreateStudent = async (data: FieldValues) => {
     const studentInfo = {
       userName: data?.userName,
       email: data?.email,
@@ -89,25 +86,28 @@ const CreateStudent = () => {
       hscRoll: data?.hscRoll,
       hscResult: Number(data?.hscResult),
       addmissionSemester: data?.addmissionSemester,
-      academicDepartment: data?.academicDepartment
+      academicDepartment: data?.academicDepartment,
     };
 
     const studentData = {
-      student: studentInfo
-    }
-    const imageFiels = uploadedFiles[0]?.originFileObj
-    
-    const formData = new FormData();
-    formData.append('data', JSON.stringify(studentData))
-    if(imageFiels){
-      formData.append('file', imageFiels)
+      student: studentInfo,
     };
+    const imageFiels = uploadedFiles[0]?.originFileObj;
 
-    createStudent(formData);
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(studentData));
+    if (imageFiels) {
+      formData.append("file", imageFiels);
+    }
+    const toastId = toast.loading("Creating Student");
+
+    try {
+      const res = await createStudent(formData).unwrap();
+      toast.success(res?.message, { id: toastId, duration: 3000 });
+    } catch (error) {
+      toast.error(error?.data?.message, { id: toastId, duration: 3000 });
+    }
   };
-
-  console.log('data => ', data);
-  console.log('error => ', error);
 
   return (
     <div className="w-[100%]">
