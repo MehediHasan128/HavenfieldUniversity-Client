@@ -5,10 +5,13 @@ import { PowerIcon } from "@heroicons/react/24/outline";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { logout, useCurrentUser } from "../../redux/features/auth/authSlice";
 import { StudentPaths } from "../../routes/StudentRoutes";
+import { SuperAdminPaths } from "../../routes/SuperAdminRoutes";
 
 const { Sider } = Layout;
 
 const Role = {
+  SUPER_ADMIN: "super-admin",
+  REGISTRAR: "registrar",
   ADMIN: "admin",
   FACULTY: "faculty",
   STUDENT: "student",
@@ -29,6 +32,12 @@ const Sidebar = () => {
   let sidebarItems;
 
   switch (role) {
+    case Role.SUPER_ADMIN:
+      sidebarItems = generateSidebarItems(SuperAdminPaths, Role.SUPER_ADMIN);
+      break;
+      case Role.REGISTRAR:
+      sidebarItems = generateSidebarItems(AdminPaths, Role.ADMIN);
+      break;
     case Role.ADMIN:
       sidebarItems = generateSidebarItems(AdminPaths, Role.ADMIN);
       break;

@@ -10,6 +10,7 @@ import CreateStudent from "../pages/Admin/UserManagement/CreateStudent";
 import { generateUserRoutes } from "../utils/generateUserRoutes";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { HiOutlineUserGroup, HiOutlineAcademicCap } from "react-icons/hi2";
+import CreateDepartmentAdmin from "../pages/Admin/UserManagement/CreateDepartmentAdmin";
 
 export const AdminPaths = [
   {
@@ -27,6 +28,11 @@ export const AdminPaths = [
     icon: <HiOutlineUserGroup className="size-4 md:size-5" />,
     label: "User Management",
     children: [
+      {
+        path: "create-department-admin",
+        label: "Create D. Admin",
+        element: <CreateDepartmentAdmin />,
+      },
       {
         path: "create-student",
         label: "Create Student",
