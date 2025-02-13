@@ -7,6 +7,7 @@ import { logout, useCurrentUser } from "../../redux/features/auth/authSlice";
 import { StudentPaths } from "../../routes/StudentRoutes";
 import { SuperAdminPaths } from "../../routes/SuperAdminRoutes";
 import { RegistrarPaths } from "../../routes/RegistrarRoutes";
+import { useGetUserQuery } from "../../redux/features/getUserApi";
 
 const { Sider } = Layout;
 
@@ -28,6 +29,9 @@ const Sidebar = () => {
   const handelLogout = () => {
     dispatch(logout());
   };
+
+  const {data: userData} = useGetUserQuery(`/${userRole}/${user?.userId}`);
+  console.log(userData);
 
   const role = `${userRole}`;
   let sidebarItems;
@@ -67,12 +71,12 @@ const Sidebar = () => {
       <div className="flex flex-col h-screen">
         <div className="p-3 flex justify-center items-center">
           <div>
-            <div className="size-12 bg-purple-700 mx-auto lg:size-20 rounded-full flex justify-center items-center overflow-hidden">
+            <div className="size-12 bg-purple-700 mx-auto lg:size-28 rounded-full flex justify-center items-center overflow-hidden md:mb-2">
               {imageURL ? (
                 <>
                   <img
                     className="w-full h-full bg-cover"
-                    src="https://cdn.pixabay.com/photo/2021/09/20/03/24/skeleton-6639547_1280.png"
+                    src={userData?.data?.imageURL}
                     alt=""
                   />
                 </>
@@ -85,7 +89,7 @@ const Sidebar = () => {
               )}
             </div>
             <h1 className="hidden lg:flex text-lg font-semibold text-center">
-              Mehedi Hasan
+              {userData?.data?.userName.firstName} {userData?.data?.userName.lastName}
             </h1>
           </div>
         </div>

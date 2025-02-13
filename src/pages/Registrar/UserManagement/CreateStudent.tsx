@@ -4,16 +4,16 @@ import { Button, Divider, UploadFile } from "antd";
 import HInput from "../../../components/form/HInput";
 import HDatePicker from "../../../components/form/HDatePicker";
 import HSelect from "../../../components/form/HSelect";
-import { yearOptions } from "../../../constant/semester";
 import { useEffect, useState } from "react";
 import { TQueryParams } from "../../../types/academicSemester";
 import { useGetAllSemesterQuery } from "../../../redux/features/Admin/AcademicManagement/academicSemesterApi";
 import { generateSelectOptions } from "../../../utils/generateSelectOptions";
-import { useGetAllAcademicSchoolQuery } from "../../../redux/features/Admin/AcademicManagement/academicSchoolApi";
 import { useGetAllAcademicDepartmentQuery } from "../../../redux/features/Admin/AcademicManagement/academicDepartmentApi";
 import HUploads from "../../../components/form/HUploads";
-import { useCreateStudentMutation } from "../../../redux/features/Admin/UserManagement/studentApi";
+import { useCreateStudentMutation } from "../../../redux/features/Registrar/UserManagement/studentApi";
 import { toast } from "sonner";
+import { yearOptions } from "../../../constant/semester";
+import { useGetAllAcademicSchoolQuery } from "../../../redux/features/Admin/AcademicManagement/academicSchoolApi";
 
 const genderOptions = [
   { value: "male", label: "Male" },
@@ -121,19 +121,13 @@ const CreateStudent = () => {
               <span className="text-blue-600">Personal Information</span>
             </Divider>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3  gap-3">
+            <div className="grid grid-cols-1 lg:grid-cols-2  gap-3">
               <HInput
                 type="text"
                 label="First Name"
                 name="userName.firstName"
                 placeholder="Enter student first name"
                 required={true}
-              />
-              <HInput
-                type="text"
-                label="Middle Name"
-                name="userName.middleName"
-                placeholder="Enter student middle name"
               />
               <HInput
                 type="text"
@@ -191,21 +185,92 @@ const CreateStudent = () => {
               <span className="text-blue-600">Address</span>
             </Divider>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-              <HInput
-                type="text"
-                label="Present Address"
-                name="presentAddress"
-                placeholder="Enter student present address"
-                required={true}
-              />
-              <HInput
-                type="text"
-                label="Permanent Address"
-                name="permanentAddress"
-                placeholder="Enter student permanent address"
-                required={true}
-              />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+              <div>
+                <h1 className="text-lg font-semibold my-3">
+                  1. Present Address
+                </h1>
+                <div className="grid md:grid-cols-2 gap-3">
+                  <HInput
+                    type="text"
+                    label="Street"
+                    name="presentAddress.street"
+                    placeholder="Enter street"
+                    required={true}
+                  />
+                  <HInput
+                    type="text"
+                    label="City"
+                    name="presentAddress.city"
+                    placeholder="Enter city"
+                    required={true}
+                  />
+                  <HInput
+                    type="text"
+                    label="State"
+                    name="presentAddress.state"
+                    placeholder="Enter state"
+                    required={true}
+                  />
+                  <HInput
+                    type="text"
+                    label="Postal Code"
+                    name="presentAddress.postalCode"
+                    placeholder="Enter postalCode"
+                    required={true}
+                  />
+                  <HInput
+                    type="text"
+                    label="Country"
+                    name="presentAddress.country"
+                    placeholder="Enter country"
+                    required={true}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <h1 className="text-lg font-semibold my-3">
+                  2. Permanent Address
+                </h1>
+                <div className="grid md:grid-cols-2 gap-3">
+                  <HInput
+                    type="text"
+                    label="Street"
+                    name="permanentAddress.street"
+                    placeholder="Enter street"
+                    required={true}
+                  />
+                  <HInput
+                    type="text"
+                    label="City"
+                    name="permanentAddress.city"
+                    placeholder="Enter city"
+                    required={true}
+                  />
+                  <HInput
+                    type="text"
+                    label="State"
+                    name="permanentAddress.state"
+                    placeholder="Enter state"
+                    required={true}
+                  />
+                  <HInput
+                    type="text"
+                    label="Postal Code"
+                    name="permanentAddress.postalCode"
+                    placeholder="Enter postalCode"
+                    required={true}
+                  />
+                  <HInput
+                    type="text"
+                    label="Country"
+                    name="permanentAddress.country"
+                    placeholder="Enter country"
+                    required={true}
+                  />
+                </div>
+              </div>
             </div>
 
             <Divider orientation="left">
@@ -252,7 +317,7 @@ const CreateStudent = () => {
                 placeholder="Enter student mother contact number"
               />
             </div>
-            <h1 className="text-lg font-bold my-3">Local Guardian</h1>
+            <h1 className="text-lg font-semibold my-3">Local Guardian</h1>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
               <HInput
                 type="text"

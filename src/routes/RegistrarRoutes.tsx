@@ -2,8 +2,8 @@ import { LuLayoutDashboard } from "react-icons/lu";
 import { generateUserRoutes } from "../utils/generateUserRoutes";
 import { HiOutlineUserGroup } from "react-icons/hi2";
 import RegistrarDashboard from "../pages/Registrar/RegistrarDashboard";
-import CreateStudent from "../pages/Admin/UserManagement/CreateStudent";
-import CreateFaculty from "../pages/Admin/UserManagement/CreateFaculty";
+import CreateStudent from "../pages/Registrar/UserManagement/CreateStudent";
+import CreateFaculty from "../pages/Registrar/UserManagement/CreateFaculty";
 
 export const RegistrarPaths = [
   {

@@ -5,12 +5,11 @@ import CreateAcademicDepartment from "../pages/Admin/AcademicManagement/CreateAc
 import CreateAcademicSchool from "../pages/Admin/AcademicManagement/CreateAcademicSchool";
 import CreateAcademicSemester from "../pages/Admin/AcademicManagement/CreateAcademicSemester";
 import AdminDashboard from "../pages/Admin/AdminDashboard";
-import CreateFaculty from "../pages/Admin/UserManagement/CreateFaculty";
-import CreateStudent from "../pages/Admin/UserManagement/CreateStudent";
+import CreateFaculty from "../pages/Registrar/UserManagement/CreateFaculty";
+import CreateStudent from "../pages/Registrar/UserManagement/CreateStudent";
 import { generateUserRoutes } from "../utils/generateUserRoutes";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { HiOutlineUserGroup, HiOutlineAcademicCap } from "react-icons/hi2";
-import CreateDepartmentAdmin from "../pages/Admin/UserManagement/CreateDepartmentAdmin";
 
 export const AdminPaths = [
   {
@@ -21,18 +20,12 @@ export const AdminPaths = [
     path: "dashboard",
     label: "Dashboard",
     element: <AdminDashboard />,
-    icon: <LuLayoutDashboard className="size-4 md:size-5" />
-
+    icon: <LuLayoutDashboard className="size-4 md:size-5" />,
   },
   {
     icon: <HiOutlineUserGroup className="size-4 md:size-5" />,
     label: "User Management",
     children: [
-      {
-        path: "create-department-admin",
-        label: "Create D. Admin",
-        element: <CreateDepartmentAdmin />,
-      },
       {
         path: "create-student",
         label: "Create Student",
