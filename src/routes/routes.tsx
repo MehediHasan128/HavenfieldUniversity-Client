@@ -4,6 +4,7 @@ import App from "../App";
 import { AdminRoutes } from "./AdminRoutes";
 import { StudentRoutes } from "./StudentRoutes";
 import { SuperAdminRoutes } from "./SuperAdminRoutes";
+import { RegistrarRoutes } from "./RegistrarRoutes";
 
 const router = createBrowserRouter([
     {
@@ -14,6 +15,11 @@ const router = createBrowserRouter([
         path: '/super-admin',
         element: <App />,
         children: SuperAdminRoutes
+    },
+    {
+        path: '/registrar',
+        element: <App />,
+        children: RegistrarRoutes
     },
     {
         path: '/admin',

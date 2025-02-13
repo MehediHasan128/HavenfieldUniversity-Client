@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { logout, useCurrentUser } from "../../redux/features/auth/authSlice";
 import { StudentPaths } from "../../routes/StudentRoutes";
 import { SuperAdminPaths } from "../../routes/SuperAdminRoutes";
+import { RegistrarPaths } from "../../routes/RegistrarRoutes";
 
 const { Sider } = Layout;
 
@@ -36,7 +37,7 @@ const Sidebar = () => {
       sidebarItems = generateSidebarItems(SuperAdminPaths, Role.SUPER_ADMIN);
       break;
       case Role.REGISTRAR:
-      sidebarItems = generateSidebarItems(AdminPaths, Role.ADMIN);
+      sidebarItems = generateSidebarItems(RegistrarPaths, Role.REGISTRAR);
       break;
     case Role.ADMIN:
       sidebarItems = generateSidebarItems(AdminPaths, Role.ADMIN);
