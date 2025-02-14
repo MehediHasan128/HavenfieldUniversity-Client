@@ -2,34 +2,83 @@ import { FieldValues } from "react-hook-form";
 import HForm from "../../../components/form/HForm";
 import HUploads from "../../../components/form/HUploads";
 import { useState } from "react";
-import { Divider, UploadFile } from "antd";
+import { Button, Divider, UploadFile } from "antd";
 import HInput from "../../../components/form/HInput";
 import { bloodGrtoupOptions, genderOptions } from "../../../global";
 import HSelect from "../../../components/form/HSelect";
 import HDatePicker from "../../../components/form/HDatePicker";
 import { useGetAllAcademicDepartmentQuery } from "../../../redux/features/Admin/AcademicManagement/academicDepartmentApi";
 import { generateSelectOptions } from "../../../utils/generateSelectOptions";
+import { toast } from "sonner";
+import { useCreateFacultyMutation } from "../../../redux/features/Registrar/UserManagement/facultyApi";
 
 export const facultyDesignationOptions = [
-    { value: "Chancellor", label: "Chancellor" },
-    { value: "Dean", label: "Dean" },
-    { value: "Department Head", label: "Department Head" },
-    { value: "Professor", label: "Professor" },
-    { value: "Associate Professor", label: "Associate Professor" },
-    { value: "Assistant Professor", label: "Assistant Professor" },
-    { value: "Lecturer", label: "Lecturer" },
-    { value: "Research Assistant", label: "Research Assistant" },
-    { value: "Lab Assistant", label: "Lab Assistant" },
-  ];
-
-
-
+  { value: "Chancellor", label: "Chancellor" },
+  { value: "Dean", label: "Dean" },
+  { value: "Department Head", label: "Department Head" },
+  { value: "Professor", label: "Professor" },
+  { value: "Associate Professor", label: "Associate Professor" },
+  { value: "Assistant Professor", label: "Assistant Professor" },
+  { value: "Lecturer", label: "Lecturer" },
+  { value: "Research Assistant", label: "Research Assistant" },
+  { value: "Lab Assistant", label: "Lab Assistant" },
+];
 
 const CreateFaculty = () => {
-    const [uploadedFiles, setUploadedFiles] = useState<UploadFile[]>([]);
-    const {data: departmentdata} = useGetAllAcademicDepartmentQuery(undefined);
-    const departmentOptions = generateSelectOptions(departmentdata, "departmentName");
-  const handleCreateFaculty = (data: FieldValues) => {};
+  const [uploadedFiles, setUploadedFiles] = useState<UploadFile[]>([]);
+  const { data: departmentdata } = useGetAllAcademicDepartmentQuery(undefined);
+  const departmentOptions = generateSelectOptions(
+    departmentdata,
+    "departmentName"
+  );
+
+  const [createFaculty, {data, error}] = useCreateFacultyMutation();
+
+  const handleCreateFaculty = async(data: FieldValues) => {
+    const facultyInfo = {
+      userName: data?.userName,
+      email: data?.email,
+      gender: data?.gender,
+      dateOfBirth: data?.dateOfBirth,
+      contactNumber: data?.contactNumber,
+      bloodGroup: data?.bloodGroup,
+      designation: data?.designation,
+      joiningDate: data?.joiningDate,
+      academicDepartment: data?.academicDepartment,
+      presentAddress: data?.presentAddress,
+      permanentAddress: data?.permanentAddress,
+      educationalBackground: data?.educationalBackground,
+      professionalExperience: data?.professionalExperience,
+      skillsAndCertifications: [data?.skillsAndCertifications],
+      sampleWorkPortfolio: data?.sampleWorkPortfolio,
+      awardsAndAchievements: [data?.awardsAndAchievements],
+      recommendationLetters: data?.recommendationLetters,
+      reference: data?.reference,
+    };
+    const facultyData = {
+      faculty: facultyInfo
+    };
+
+    const imageFiels = uploadedFiles[0]?.originFileObj;
+
+    const formData = new FormData();
+    formData.append("data", JSON.stringify(facultyData));
+    if(imageFiels){
+      formData.append("file", imageFiels);
+    }
+
+    const toastId = toast.loading("Creating faculty");
+
+    try {
+      const res = await createFaculty(formData).unwrap();
+      toast.success(res?.message, { id: toastId, duration: 3000 });
+    } catch (error) {
+      toast.error(error?.data?.message, { id: toastId, duration: 3000 });
+    }
+  };
+
+  console.log("data => ", data);
+  console.log("error => ", error);
 
   return (
     <div className="w-full">
@@ -61,7 +110,7 @@ const CreateFaculty = () => {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
-            <HInput
+              <HInput
                 type="email"
                 label="Email"
                 name="email"
@@ -211,76 +260,78 @@ const CreateFaculty = () => {
             </Divider>
 
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-3">
-            <HInput
+              <HInput
                 type="text"
                 label="Degree"
-                name="degree"
+                name={`educationalBackground.0.degree`}
                 placeholder="Enter degree"
                 required={true}
               />
-            <HInput
+              <HInput
                 type="text"
                 label="University/Institution"
-                name="university"
+                name={`educationalBackground.0.university`}
                 placeholder="Enter university"
                 required={true}
               />
-            <HInput
+              <HInput
                 type="text"
                 label="Year Of Graduation"
-                name="yearOfGraduation"
+                name={`educationalBackground.0.yearOfGraduation`}
                 placeholder="Enter graduation year"
                 required={true}
               />
-            <HInput
+              <HInput
                 type="text"
                 label="Specialization"
-                name="specialization"
+                name={`educationalBackground.0.specialization`}
                 placeholder="Enter specialization"
                 required={true}
               />
-            <HInput
+              <HInput
                 type="text"
                 label="Degree"
-                name="degree"
+                name={`educationalBackground.1.degree`}
                 placeholder="Enter degree"
                 required={true}
               />
-            <HInput
+              <HInput
                 type="text"
                 label="University/Institution"
-                name="university"
+                name={`educationalBackground.1.university`}
                 placeholder="Enter university"
                 required={true}
               />
-            <HInput
+              <HInput
                 type="text"
                 label="Year Of Graduation"
-                name="yearOfGraduation"
+                name={`educationalBackground.1.yearOfGraduation`}
                 placeholder="Enter graduation year"
                 required={true}
               />
-            <HInput
+              <HInput
                 type="text"
                 label="Specialization"
-                name="specialization"
+                name={`educationalBackground.1.specialization`}
                 placeholder="Enter specialization"
                 required={true}
               />
             </div>
 
             <Divider orientation="left">
-              <span className="text-blue-600">Certifications And Achievements</span>
+              <span className="text-blue-600">
+                Certifications And Achievements
+              </span>
             </Divider>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-            <HInput
+              <HInput
                 type="text"
                 label="Skills And Certification"
                 name="skillsAndCertifications"
                 placeholder="Enter skills and certificate"
               />
-            <HInput
+              <HInput
                 type="text"
                 label="Awards And Achievements"
                 name="awardsAndAchievements"
@@ -293,52 +344,52 @@ const CreateFaculty = () => {
             </Divider>
 
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-3">
-            <HInput
+              <HInput
                 type="text"
                 label="Role"
-                name="role"
+                name={`professionalExperience.0.role`}
                 placeholder="Enter role"
               />
-            <HInput
+              <HInput
                 type="text"
                 label="Institution"
-                name="institution"
+                name={`professionalExperience.0.institution`}
                 placeholder="Enter institution"
               />
-            <HInput
+              <HInput
                 type="text"
                 label="Duration"
-                name="duration"
+                name={`professionalExperience.0.duration`}
                 placeholder="Enter working duration"
               />
-            <HInput
+              <HInput
                 type="text"
                 label="Responsibilities"
-                name="responsibilities"
+                name={`professionalExperience.0.responsibilities`}
                 placeholder="Enter responsibilities"
               />
-            <HInput
+              <HInput
                 type="text"
                 label="Role"
-                name="role"
+                name={`professionalExperience.1.role`}
                 placeholder="Enter role"
               />
-            <HInput
+              <HInput
                 type="text"
                 label="Institution"
-                name="institution"
+                name={`professionalExperience.1.institution`}
                 placeholder="Enter institution"
               />
-            <HInput
+              <HInput
                 type="text"
                 label="Duration"
-                name="duration"
+                name={`professionalExperience.1.duration`}
                 placeholder="Enter working duration"
               />
-            <HInput
+              <HInput
                 type="text"
                 label="Responsibilities"
-                name="responsibilities"
+                name={`professionalExperience.1.responsibilities`}
                 placeholder="Enter responsibilities"
               />
             </div>
@@ -348,28 +399,28 @@ const CreateFaculty = () => {
             </Divider>
 
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-3">
-            <HInput
+              <HInput
                 type="text"
                 label="Name"
-                name="name"
+                name={`recommendationLetters.0.name`}
                 placeholder="Enter name"
               />
-            <HInput
+              <HInput
                 type="text"
                 label="Designation"
-                name="designation"
+                name={`recommendationLetters.0.designation`}
                 placeholder="Enter designation"
               />
-            <HInput
+              <HInput
                 type="text"
                 label="Institution"
-                name="institution"
+                name={`recommendationLetters.0.institution`}
                 placeholder="Enter institution"
               />
-            <HInput
+              <HInput
                 type="text"
                 label="Email"
-                name="contactEmail"
+                name={`recommendationLetters.0.contactEmail`}
                 placeholder="Enter contact email"
               />
             </div>
@@ -379,34 +430,34 @@ const CreateFaculty = () => {
             </Divider>
 
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-3">
-            <HInput
+              <HInput
                 type="text"
                 label="Name"
-                name="name"
+                name="reference.name"
                 placeholder="Enter name"
               />
-            <HInput
+              <HInput
                 type="text"
                 label="Designation"
-                name="designation"
+                name="reference.designation"
                 placeholder="Enter designation"
               />
-            <HInput
+              <HInput
                 type="text"
                 label="Institution"
-                name="institution"
+                name="reference.institution"
                 placeholder="Enter institution"
               />
-            <HInput
-                type="text"
+              <HInput
+                type="email"
                 label="Email"
-                name="email"
+                name="reference.email"
                 placeholder="Enter contact email"
               />
-            <HInput
+              <HInput
                 type="text"
                 label="Number"
-                name="contactNumber"
+                name="reference.contactNumber"
                 placeholder="Enter contact number"
               />
             </div>
@@ -415,22 +466,24 @@ const CreateFaculty = () => {
               <span className="text-blue-600">Sample Work Portfolio</span>
             </Divider>
 
-
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-            <HInput
+              <HInput
                 type="text"
                 label="Type"
-                name="type"
+                name={`sampleWorkPortfolio.0.type`}
                 placeholder="Work type"
               />
-            <HInput
+              <HInput
                 type="text"
                 label="URL"
-                name="url"
+                name={`sampleWorkPortfolio.0.url`}
                 placeholder="Enter sample url"
               />
             </div>
 
+            <div className="mt-5">
+              <Button htmlType="submit">Add Faculty</Button>
+            </div>
           </div>
         </HForm>
       </div>
