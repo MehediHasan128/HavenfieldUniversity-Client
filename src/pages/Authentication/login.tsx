@@ -8,12 +8,14 @@ import { setUser, TUser } from "../../redux/features/auth/authSlice";
 import { decodedToken } from "../../utils/decodedToken";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const Login = () => {
   const [click, setClick] = useState(false);
 
   const dispatch = useAppDispatch();
-  const [login, { data, error }] = useLoginMutation();
+  const [login, { isLoading }] = useLoginMutation();
   const navigate = useNavigate();
 
   const { register, handleSubmit } = useForm({
@@ -22,9 +24,6 @@ const Login = () => {
       password: "admin123",
     },
   });
-
-  // console.log("data =>", data);
-  // console.log("error =>", error);
 
   const handelLogin = async (formData: FieldValues) => {
     const toastId = toast.loading("Logging in");
@@ -73,7 +72,7 @@ const Login = () => {
               >
                 <div className="relative">
                   <input
-                    className="bg-transparent border-b-[3px] border-white focus:border-b-[3px] focus:outline-none w-full pl-10 pr-3 py-3 lg:text-lg font-semibold text-white"
+                    className="bg-transparent border-b-[3px] border-white focus:border-b-[3px] focus:outline-none w-full pl-10 pr-3 py-3 lg:text-md text-white"
                     type="email"
                     id=""
                     placeholder="Enter your email"
@@ -96,7 +95,7 @@ const Login = () => {
                 </div>
                 <div className="relative">
                   <input
-                    className="bg-transparent border-b-[3px] border-white focus:border-b-[3px] focus:outline-none w-full pl-10 pr-3 py-3 lg:text-lg font-semibold text-white"
+                    className="bg-transparent border-b-[3px] border-white focus:border-b-[3px] focus:outline-none w-full pl-10 pr-3 py-3 lg:text-md text-white"
                     type={click ? "text" : "password"}
                     id=""
                     placeholder="*****"
@@ -164,12 +163,22 @@ const Login = () => {
                   </div>
                 </div>
                 <div className="w-full">
-                  <button
-                    type="submit"
-                    className="w-full h-full p-3 mt-3 bg-black text-sm lg:text-xl lg:font-semibold text-white rounded-xl hover:scale-105 duration-700 cursor-pointer"
-                  >
-                    LOGIN
-                  </button>
+                  {isLoading ? (
+                    <button
+                      type="submit"
+                      className="w-full h-full p-3 mt-3 bg-black text-sm lg:text-lg text-white rounded-xl hover:scale-105 duration-700 cursor-pointer"
+                    >
+                      <Spin size="default" />
+                    </button>
+                  ) : (
+                    <button
+                      type="submit"
+                      className="w-full h-full p-3 mt-3 bg-black text-sm lg:text-lg text-white rounded-xl hover:scale-105 duration-700 cursor-pointer"
+                    >
+                      LOGIN
+                    </button>
+                  )}
+
                   <div className="text-end mt-1">
                     <button className="text-lg font-semibold underline text-blue-300 cursor-pointer">
                       Forgot Password?

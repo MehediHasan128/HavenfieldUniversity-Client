@@ -35,7 +35,9 @@ const HSelect = ({
             >
               <Select
                 {...field}
+                showSearch
                 placeholder={placeholder}
+                optionFilterProp="label"
                 options={options}
                 id={name}
                 onChange={(value) => {

@@ -31,7 +31,6 @@ const Sidebar = () => {
   };
 
   const {data: userData} = useGetUserQuery(`/${userRole}/${user?.userId}`);
-  console.log(userData);
 
   const role = `${userRole}`;
   let sidebarItems;

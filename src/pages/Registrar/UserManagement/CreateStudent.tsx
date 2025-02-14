@@ -14,22 +14,7 @@ import { useCreateStudentMutation } from "../../../redux/features/Registrar/User
 import { toast } from "sonner";
 import { yearOptions } from "../../../constant/semester";
 import { useGetAllAcademicSchoolQuery } from "../../../redux/features/Admin/AcademicManagement/academicSchoolApi";
-
-const genderOptions = [
-  { value: "male", label: "Male" },
-  { value: "female", label: "Female" },
-];
-
-const bloodGrtoupOptions = [
-  { value: "A+", label: "A+" },
-  { value: "A-", label: "A-" },
-  { value: "B+", label: "B+" },
-  { value: "B-", label: "B-" },
-  { value: "O+", label: "O+" },
-  { value: "O-", label: "O-" },
-  { value: "AB+", label: "AB+" },
-  { value: "AB-", label: "AB-" },
-];
+import { bloodGrtoupOptions, genderOptions } from "../../../global";
 
 const CreateStudent = () => {
   const { control, watch } = useForm();
